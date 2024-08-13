@@ -7,6 +7,8 @@ export interface IProduct {
   image?:string
 }
 
-export interface IProductListProps {
-  products: IProduct[]
+export interface IBrand {
+  brand: string
 }
+
+

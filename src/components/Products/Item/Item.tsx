@@ -1,5 +1,5 @@
 import React from "react";
-import { IProduct } from "../../interface";
+import { IProduct } from "../../../interface/index";
 import {
   ItemCard,
   ItemCardButton,
@@ -7,8 +7,11 @@ import {
   ItemCardInfo,
   ItemCardSubInfo,
 } from "./index";
+import { ItemProps } from "./item.interface";
 
-function Item(data: IProduct) {
+
+
+function Item({data}: ItemProps) {
 
   return (
     <ItemCard>

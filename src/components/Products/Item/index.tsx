@@ -10,6 +10,7 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 margin: 20px 20px;
+background-color: white;
 `
 
 export const ItemCardImage = styled.div`

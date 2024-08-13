@@ -7,10 +7,10 @@ import {
   ImageDiv,
   RegisterImg,
   RegisterTitle,
-  RegisterHeader,
-  RegisterFooter,
-  RegisterHeadrTitle,
+
 } from "./index";
+import Header from "../Layouts/Header"
+import Footer from "../Layouts/Footer";
 
 function Register() {
   const navigate = useNavigate();
@@ -37,9 +37,7 @@ function Register() {
   };
   return (
     <RegisterDiv>
-      <RegisterHeader>
-        <RegisterHeadrTitle>Welcome to PhoneShop</RegisterHeadrTitle>
-      </RegisterHeader>
+      <Header/>
       <ImageDiv>
         <RegisterImg src="\img\celulares.jpg" alt="" />
       </ImageDiv>
@@ -97,9 +95,7 @@ function Register() {
           </button>
         </form>
       </RegisterFormDiv>
-      <RegisterFooter>
-        <h6 style={{ marginRight: "20px" }}>Created by:</h6>
-      </RegisterFooter>
+     <Footer/>
     </RegisterDiv>
   );
 }
