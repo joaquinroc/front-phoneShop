@@ -14,21 +14,48 @@ export const ImageDiv = styled.div`
   display: flex;
   justify-content: center;
   align-item: center;
-  padding-top: 50px;
+  padding-top: 70px;
+  @media (max-width: 768px) {
+    display: none;
+  }
+   
 `;
 
 export const RegisterImg = styled.img`
   width: 70%;
   height: 80%;
   border-radius: 30px;
-`;
-export const RegisterFormDiv = styled.div`
-  width: 50%;
+
+   
 `;
 
+export const RegisterForm = styled.form`
+  padding: 0px 30px;
+
+   @media (min-width: 768px) {
+    padding: 0% 15%;
+  }
+
+   @media (max-width: 768px) {
+    padding: 0% 10%;
+  }
+
+   
+`
+export const RegisterFormDiv = styled.div`
+  width: 50%;
+  padding-top: 100px;
+    @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+export const RegisterButton = styled.button`
+`
+
 export const RegisterTitle = styled.h1`
-  margin-top: 40px;
-  margin-bottom: 40px;
+  
+  margin-bottom: 5%;
 `;
 
 
