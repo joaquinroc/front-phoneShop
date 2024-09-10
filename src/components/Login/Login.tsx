@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { LoginContainer, LoginDiv, LoginDivTitle, LoginForm } from ".";
-import { ILogin } from "./interface";
+import { ILogin, ISetErrors } from "./interface";
 import { handleLoggin } from "../../api/login";
 import { useNavigate } from "react-router-dom";
+import ErrorMessage from "../Errors/ErrorMessage";
+
 
 function Login() {
   const navigate = useNavigate();
   const [data, setData] = useState<ILogin>({ email: "", password: "" });
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<ISetErrors>({emailError: "", passwordError: ""});
+  
 
   const handleLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -48,7 +51,7 @@ function Login() {
             value={data.email}
             onChange={handleLogin}
           />
-          {error && <div className="error">{error}</div>} {/* Mostrar error */}
+          {error.emailError && <ErrorMessage message={error.emailError}/>} 
         </div>
         <div className="mb-3">
           <label htmlFor="password" className="form-label">
@@ -64,7 +67,7 @@ function Login() {
             value={data.password}
             onChange={handleLogin}
           />
-          {error && <div className="error">{error}</div>} {/* Mostrar error */}
+          {error.passwordError && <ErrorMessage message={error.passwordError}/>}
         </div>
         <button type="submit" className="btn btn-primary">
           Login

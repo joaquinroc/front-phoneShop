@@ -1,7 +1,12 @@
 import axios from "axios";
 import { LogginData } from "./interface";
+import { ISetErrors } from "../components/Login/interface";
 
-export async function handleLoggin(loginData: LogginData, navigate: (path: string) => void, setErrors: (message :string) => void  ): Promise<void> {
+export async function handleLoggin(
+  loginData: LogginData,
+  navigate: (path: string) => void,
+  setErrors: (message: ISetErrors) => void
+): Promise<void> {
   try {
     const response = await axios.post(
       "http://localhost:3000/register/login",
@@ -12,20 +17,40 @@ export async function handleLoggin(loginData: LogginData, navigate: (path: strin
         },
       }
     );
-        if (response.status === 201) {
-          navigate('/list');
+    if (response.status === 201) {
+      navigate("/list");
+    }
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      if (err.response) {
+        const status = err.response.status;
+        if (status === 400) {
+          const message = err.response.data.message;
+          if (message === "El usuario no existe") {
+            setErrors({
+              emailError: "El usuario no existe",
+              passwordError: "",
+            });
+          } else if (message === "Contraseña incorrecta") {
+            setErrors({
+              emailError: "",
+              passwordError: "Contraseña incorrecta",
+            });
+          }
+        } else if (status === 500) {
+          setErrors({
+            emailError: "",
+            passwordError: "",
+            otherError: "Tenemos un error, estamos trabajando en ello",
+          });
         }
-        if(response.status === 400) {
-          setErrors("Cualquiera");
-          
-        }
-    } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-    
-        setErrors(err.response.data.message || 'Error en la solicitud');
       } else {
-    
-        setErrors('Ocurrió un error desconocido');
+        setErrors({
+          emailError: "",
+          passwordError: "",
+          otherError: "Tenemos un error, estamos trabajando en ello",
+        });
       }
     }
+  }
 }
