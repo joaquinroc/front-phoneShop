@@ -1,11 +1,13 @@
 import React from "react";
 import { IProduct } from "../../../interface/index";
 import {
+  ItemBrandName,
   ItemCard,
   ItemCardButton,
   ItemCardImage,
   ItemCardInfo,
   ItemCardSubInfo,
+  ItemImage,
 } from "./index";
 import { ItemProps } from "./item.interface";
 
@@ -15,12 +17,11 @@ function Item({data}: ItemProps) {
 
   return (
     <ItemCard>
+      <ItemBrandName>{data.brand}</ItemBrandName>
       <ItemCardImage>
-        <h1>{data.image}</h1>
+        <ItemImage src="\public\img\celular.jpg"></ItemImage>
       </ItemCardImage>
       <ItemCardInfo>
-        <h4>{data.brand}</h4>
-
         <ItemCardSubInfo>
           <h3>{data.name}</h3>
           <h4>{data.model}</h4>

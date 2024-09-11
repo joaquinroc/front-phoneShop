@@ -8,6 +8,6 @@ export interface DataProviderProps {
 export interface DataContextProps {
   data: IProduct[];
   filteredData: IProduct[];
-  setFilter: (filter: string) => void;
-  setPriceRange?: (range: [number  , number]) => void;
+  setFilter: (filter: { brand: string; minPrice: number; maxPrice: number }) => void;
+  setPriceRange?: (range: [number, number]) => void;
 }

@@ -1,23 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  FilterBranName,
-  FilterCheckBox,
-  FilterContainer,
-  FilterDiv,
-  FilterInfo,
-  FilterNumInput,
-  FilterSubDiv,
-} from ".";
+import { BrandFilterDiv, BrandFilterTitle, FilterContainer, MaxPrice, MinPrice, PriceFilterDiv, RangeInput } from ".";
 import { DataContext } from "../../../context/context";
 import getBrands from "../../../api/brands";
 import { IBrand } from "../../../interface";
 
 function Filter() {
   const [getBrand, setGetBrand] = useState<IBrand[]>([]);
-
-  const [disabledInputs, setDisabledInputs] = useState<string | null>(null); 
-  const [minValue, setMinValue] = useState(0);
-  const [maxValue, setMaxValue] = useState(0);
+  const [selectedBrand, setSelectedBrand] = useState<string>("");
+  const [priceRange, setPriceRange] = useState<number>(10000); 
 
   const context = useContext(DataContext);
   if (!context) {
@@ -38,60 +28,53 @@ function Filter() {
 
   const { setFilter } = context;
 
-  function handleFilterChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleBrandChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const value = event.target.value;
-    const isChecked = event.target.checked;
+    setSelectedBrand(value);
+    setFilter({ brand: value, minPrice: 0, maxPrice: priceRange });
+  }
 
-    setFilter(isChecked ? value : '');
-
-    // Actualiza el input deshabilitado según la selección
-    setDisabledInputs(isChecked ? value : null);
+  function handlePriceChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = Number(event.target.value);
+    setPriceRange(value);
+    setFilter({ brand: selectedBrand, minPrice: 0, maxPrice: value });
   }
 
   return (
     <>
       <FilterContainer>
-        <FilterDiv>
-          {getBrand.map((element, index) => (
-            <FilterInfo key={index}>
-              <FilterBranName>
-                {element.brand.toLocaleUpperCase()}
-              </FilterBranName>
-              <div className="form-check">
-                <FilterCheckBox
-                  className="form-check-input"
-                  type="checkbox"
-                  id={`flexCheck${index}`} // Asegúrate de tener IDs únicos
-                  value={element.brand}
-                  name="brand"
-                  onChange={handleFilterChange}
-                  disabled={disabledInputs !== null && disabledInputs !== element.brand} // Deshabilita todos los inputs excepto el seleccionado
-                />
-              </div>
-            </FilterInfo>
-          ))}
-        </FilterDiv>
-        
-        <FilterDiv>
-          <FilterSubDiv> 
-            <h5 style={{width: "100%"}}>Price:</h5>
-            <FilterNumInput
-              type="number"
-              placeholder="minimo"
-        
-              value={minValue}
-              onChange={(e) => setMinValue(Number(e.target.value))}
-            />
-            <FilterNumInput
-              type="number"
-              placeholder="maximo"
-              
-              value={maxValue}
-              onChange={(e) => setMaxValue(Number(e.target.value))}
-            />
-          </FilterSubDiv>
-        </FilterDiv>
+        <BrandFilterDiv>
+          <BrandFilterTitle>SELECT BRAND:</BrandFilterTitle>
+          <select
+            id="brand-select"
+            value={selectedBrand}
+            onChange={handleBrandChange}
+          >
+            <option value="">ALL BRANDS</option>
+            {getBrand.map((element, index) => (
+              <option key={index} value={element.brand}>
+                {element.brand}
+              </option>
+            ))}
+          </select>
+        </BrandFilterDiv>
+
+        <PriceFilterDiv>
+          <MinPrice>$0</MinPrice>
+          <MaxPrice>${priceRange}</MaxPrice>
+          <RangeInput
+            type="range"
+            id="price-range"
+            min="0"
+            max="1000"
+            value={priceRange}
+            onChange={handlePriceChange}
+          />
+        </PriceFilterDiv>
       </FilterContainer>
+      <div>
+        
+      </div>
     </>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { IProduct } from "../../../interface";
 
 import Item from "../Item/Item";
-import { ListContainer } from ".";
+import { ListContainer, NoContent } from ".";
 
 interface ListContainerProps {
   items: IProduct[];
@@ -11,6 +11,7 @@ interface ListContainerProps {
 function ListContainer2({ items }: ListContainerProps) {
  return (
     <ListContainer>
+      {items.length === 0 && (<NoContent>No hay nada</NoContent> ) }
       {items.map((item, index) => (
         <Item key={index} data={item} />
       ))}
